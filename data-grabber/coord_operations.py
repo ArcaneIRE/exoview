@@ -18,3 +18,11 @@ def galactic_to_cartesian(galactic_lat: float, galactic_long: float, dist: float
     z = dist * sin(galactic_lat_rad)
 
     return (x, y, z)
+
+
+def get_translation_diffs(x: float, y: float, z: float) -> dict[str, float]:
+    return {
+        'x_diff': -x,
+        'y_diff': -y,
+        'z_diff': -z
+    }

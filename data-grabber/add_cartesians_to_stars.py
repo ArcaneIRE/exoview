@@ -1,5 +1,5 @@
 import csv
-import galactic_to_cartesian
+from coord_operations import galactic_to_cartesian
 
 
 def add_cartesians_to_stars_csv(input_path: str, output_path: str):
@@ -22,7 +22,7 @@ def add_cartesians_to_stars_csv(input_path: str, output_path: str):
             writer.writeheader()
 
             for star in reader:
-                x, y, z = convert.galacticToCartesian(
+                x, y, z = galactic_to_cartesian(
                     star['galactic_longitude'], star['galactic_latitude'], star['distance_parsecs'])
                 star['cart_x'] = x
                 star['cart_y'] = y
