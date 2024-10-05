@@ -1,17 +1,7 @@
-# get 100 random planets
-# get a ton (1000) stars around each planet (+- 2 deg of ra and dec and 50 pc)
-# transform and add planet and star data
-# make a folder for each planet
-# write a csv per planet to each folder
+from get_random_exoplanets import get_random_exoplanets
+from get_rand_stars import get_stars
+from write_tables import write_tables
 
-from astroquery.gaia import Gaia
-from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive as nea
-from get_random_exoplanets import *
-from get_rand_stars import *
-import astropy.table
-from write_tables
-
-# Get a bunch of planets
 planets = get_random_exoplanets(5)
 for planet in planets:
     stars = get_stars(planet)

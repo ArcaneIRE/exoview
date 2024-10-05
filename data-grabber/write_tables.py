@@ -1,4 +1,4 @@
-def write_tables(planets, stars):
+def write_tables(planet, stars):
     pass
     # Make planet CSV
     # with open("planet.csv", "w") as f:
