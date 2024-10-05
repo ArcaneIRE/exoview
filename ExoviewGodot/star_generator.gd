@@ -1,6 +1,6 @@
 extends Node3D
 
-const DATA = "res://assets/testData.json"
+const DATA = "res://data/testData.json"
 
 var starScene = load("res://star.tscn")
 
@@ -8,11 +8,9 @@ var starScene = load("res://star.tscn")
 func _ready() -> void:
 	createStars(DATA)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
 
 func loadStarData(starDataFile: String):
 	var file = FileAccess.open(starDataFile, FileAccess.READ)
