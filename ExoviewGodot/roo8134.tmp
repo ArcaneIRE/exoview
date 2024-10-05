@@ -22,12 +22,6 @@ disabled = true
 
 [node name="Camera3D" type="Camera3D" parent="FirstPersonController"]
 
-[node name="DesktopFPS" type="Label3D" parent="FirstPersonController/Camera3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.4704, 0.758344, -1.27381)
-visible = false
-text = "FPS:"
-font_size = 100
-
 [node name="StarGenerator" type="Node3D" parent="."]
 script = ExtResource("2_1rmjy")
 
@@ -37,18 +31,3 @@ environment = SubResource("Environment_8gtff")
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
-
-[node name="XRFPS" type="Label3D" parent="XROrigin3D/XRCamera3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.29257, 0.114583, -0.754361)
-visible = false
-text = "FPS
-"
-font_size = 100
-
-[node name="RightController" type="XRController3D" parent="XROrigin3D"]
-tracker = &"right_hand"
-
-[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
-tracker = &"left_hand"
-
-[connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]
