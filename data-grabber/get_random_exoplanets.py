@@ -3,10 +3,11 @@ import astropy
 import numpy as np
 
 
-def get_random_exoplanets(quantity=1) -> astropy.table.QTable:
-    random_pl_names = _get_random_exoplanet_names(quantity)
-    name_conditions = [f"pl_name='{
-        row["pl_name"]}'" for row in random_pl_names]
+def get_random_exoplanets(quantity: int = 1) -> astropy.table.QTable:
+    """Gets the pl_name, ra, dec, sy_dist of a given number of exoplanets"""
+    name_conditions: list = []
+    for row in _get_random_exoplanet_names(quantity):
+        name_conditions.append(f"pl_name='{row["pl_name"]}'")
     results = NasaExoplanetArchive.query_criteria(
         table="ps",
         select="distinct pl_name, ra, dec, sy_dist",
@@ -16,7 +17,8 @@ def get_random_exoplanets(quantity=1) -> astropy.table.QTable:
     return results
 
 
-def _get_random_exoplanet_names(quantity=1):
+def _get_random_exoplanet_names(quantity: int = 1) -> astropy.table.QTable:
+    """Gets the pl_names of a given number of random exoplanets"""
     results = NasaExoplanetArchive.query_criteria(
         table="ps",
         cache=True,
