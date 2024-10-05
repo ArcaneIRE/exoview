@@ -46,7 +46,7 @@ func toggleDebugMode():
 	XRFPSDisplay.visible = debugMode && (interfaceMode == INTERFACE_MODE.XR)
 	
 	if not debugMode: #Reset player positon and look dir when debug mode turned off
-		$FirstPersonController.global_position = Vector3.ZERO
+		$FirstPersonController.global_position = Vector3(0,1,0)
 		$FirstPersonController.rotation_degrees = Vector3.ZERO
 
 func updateFPSDisplay():
