@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpqbfio3pjdxr"]
+
+[ext_resource type="PackedScene" uid="uid://dvbpi0nogej7o" path="res://first_person_controller.tscn" id="1_5f2rp"]
+[ext_resource type="Script" path="res://star_generator.gd" id="2_1rmjy"]
+
+[node name="root" type="Node3D"]
+
+[node name="FirstPersonController" parent="." instance=ExtResource("1_5f2rp")]
+
+[node name="StarGenerator" type="Node3D" parent="."]
+script = ExtResource("2_1rmjy")
