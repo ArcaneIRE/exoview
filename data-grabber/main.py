@@ -13,20 +13,37 @@ import astropy.table
 
 # Get a bunch of planets
 planets = get_random_exoplanets(5)
+points_of_view = []
+# Pair up each planet with a table of stars
+for planet in planets:
+    pov = {
+        'planet': planet,
+        'stars': get_stars(planet),
+    }
 
-# Make planet CSV
-with open("planet.csv", "w") as f:
-    fieldnames = planets.colnames
-    d_writer = csv.DictWriter(f, fieldnames=fieldnames)
-    d_writer.writeheader()
-    tb = astropy.table.Table(planets)
-    d_writer.writerow(tb[0])
+for pov in points_of_view:
+    # add cartesians relative to earth
+    # add translated cartesians with XO as origin
+    # get galactic coords with XO as origin
+    # calculate "real brightness"
+    # remove stars with a brightness above 6.5
+    pass
 
-# make star CSV for planet
-r = get_stars(planets[0])
-with open("star.csv", "w") as f:
-    fieldnames = r.colnames
-    d_writer = csv.DictWriter(f, fieldnames=fieldnames)
-    d_writer.writeheader()
-    tb = astropy.table.Table(r)
-    d_writer.writerows(tb)
+# Write Tables to CSV
+for pov in points_of_view:
+    # Make planet CSV
+    with open("planet.csv", "w") as f:
+        fieldnames = planets.colnames
+        d_writer = csv.DictWriter(f, fieldnames=fieldnames)
+        d_writer.writeheader()
+        tb = astropy.table.Table(planets)
+        d_writer.writerow(tb[0])
+
+    # Make stars CSV for planet
+    r = get_stars(planets[0])
+    with open("star.csv", "w") as f:
+        fieldnames = r.colnames
+        d_writer = csv.DictWriter(f, fieldnames=fieldnames)
+        d_writer.writeheader()
+        tb = astropy.table.Table(r)
+        d_writer.writerows(tb)
