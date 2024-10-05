@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpqbfio3pjdxr"]
+[gd_scene load_steps=8 format=3 uid="uid://dpqbfio3pjdxr"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_4v4k6"]
 [ext_resource type="Script" path="res://star_generator.gd" id="2_1rmjy"]
@@ -9,11 +9,18 @@
 [sub_resource type="Environment" id="Environment_8gtff"]
 background_mode = 1
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqrj"]
+albedo_color = Color(0.0814617, 0.253316, 5.77569e-07, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gjayy"]
+material = SubResource("StandardMaterial3D_jcqrj")
+size = Vector3(100, 1, 100)
+
 [node name="root" type="Node3D"]
 script = ExtResource("1_4v4k6")
 
 [node name="FirstPersonController" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4784)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.478)
 script = ExtResource("2_hvqpt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FirstPersonController"]
@@ -50,5 +57,12 @@ tracker = &"right_hand"
 
 [node name="LeftController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"left_hand"
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_gjayy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0232108, 0.999731, 0, -0.999731, -0.0232108, 0, 7.69889, 0)
 
 [connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]
