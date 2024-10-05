@@ -1,5 +1,5 @@
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive
-import astropy.table.QTable as QTable
+from astropy.table import QTable
 import numpy as np
 
 
