@@ -1,12 +1,12 @@
 import csv
-import convert
+import galactic_to_cartesian
 
 
 def add_cartesians_to_stars_csv(input_path: str, output_path: str):
     with open(input_path, 'r') as file:
         reader = csv.DictReader(file)
 
-        with open('output_path', 'w', newline='') as output_file:
+        with open(output_path, 'w', newline='') as output_file:
             fieldnames = reader.fieldnames
             # Rename un-descriptive headers
             for i, field_name in enumerate(fieldnames):
