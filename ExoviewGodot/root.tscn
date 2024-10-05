@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpqbfio3pjdxr"]
+
+[ext_resource type="Script" path="res://root.gd" id="1_4v4k6"]
+[ext_resource type="Script" path="res://star_generator.gd" id="2_1rmjy"]
+[ext_resource type="Script" path="res://first_person_controller.gd" id="2_hvqpt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ei85s"]
+
+[sub_resource type="Environment" id="Environment_8gtff"]
+background_mode = 1
+
+[node name="root" type="Node3D"]
+script = ExtResource("1_4v4k6")
+
+[node name="FirstPersonController" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4784)
+script = ExtResource("2_hvqpt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstPersonController"]
+shape = SubResource("SphereShape3D_ei85s")
+disabled = true
+
+[node name="Camera3D" type="Camera3D" parent="FirstPersonController"]
+
+[node name="DesktopFPS" type="Label3D" parent="FirstPersonController/Camera3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.4704, 0.758344, -1.27381)
+visible = false
+text = "FPS:"
+font_size = 100
+
+[node name="StarGenerator" type="Node3D" parent="."]
+script = ExtResource("2_1rmjy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8gtff")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="XRFPS" type="Label3D" parent="XROrigin3D/XRCamera3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.29257, 0.114583, -0.754361)
+visible = false
+text = "FPS
+"
+font_size = 100
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]

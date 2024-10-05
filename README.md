@@ -1,23 +1,5 @@
-# exoviewer
+# exoview
 
-## How to build
+> What would the night sky look like if you were standing on one of the many exoplanets discovered by astronomers and space missions?
 
-### Create a virtual env
-
-```
-$ python -m venv .
-$ source bin/activate
-```
-
-### Install deps
-
-```
-$ pip install -r requirements.txt
-```
-
-### Run main.py
-
-```
-$ python main.py
-```
-
+Our submission for the NASA 2024 Space Apps Challenge. We took a shot at the '[Exosky!](https://www.spaceappschallenge.org/nasa-space-apps-2024/challenges/exosky/?tab=details)' challenge.  
