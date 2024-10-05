@@ -1,28 +1,9 @@
-from math import *
 import json
 import astropy.units as u
 from astropy.coordinates import SkyCoord
 from astroquery.gaia import Gaia
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive as nea
-
-def galacticToCartesian(gLat, gLong, dist):
-    """
-    Convert Galactic coordinates to Cartesian coordinates.    
-    gLat: Galactic latitude in degrees
-    gLong: Galactic longitude in degrees
-    dist: Distance
-    """
-    
-    # Convert angles from degrees to radians
-    gLongRad = deg_to_rad(gLong) 
-    gLatRad = deg_to_rad(gLat)
-
-    # Cartesian coordinates conversion
-    x = dist * cos(gLatRad) * cos(gLongRad)
-    y = dist * cos(gLatRad) * sin(gLongRad)
-    z = dist * sin(gLatRad)
-    
-    return (x, y, z)
+import convert
 
 Gaia.ROW_LIMIT = 1000
 coord = SkyCoord(ra=280, dec=-60, unit=(u.degree, u.degree), frame='icrs')
