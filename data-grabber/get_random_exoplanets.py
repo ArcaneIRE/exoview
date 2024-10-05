@@ -1,9 +1,9 @@
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive
-import astropy
+import astropy.table.QTable as QTable
 import numpy as np
 
 
-def get_random_exoplanets(quantity: int = 1) -> astropy.table.QTable:
+def get_random_exoplanets(quantity: int = 1) -> QTable:
     """Gets the pl_name, ra, dec, sy_dist of a given number of exoplanets"""
     name_conditions: list = []
     for row in _get_random_exoplanet_names(quantity):
@@ -17,7 +17,7 @@ def get_random_exoplanets(quantity: int = 1) -> astropy.table.QTable:
     return results
 
 
-def _get_random_exoplanet_names(quantity: int = 1) -> astropy.table.QTable:
+def _get_random_exoplanet_names(quantity: int = 1) -> QTable:
     """Gets the pl_names of a given number of random exoplanets"""
     results = NasaExoplanetArchive.query_criteria(
         table="ps",
