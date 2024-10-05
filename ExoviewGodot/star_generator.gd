@@ -2,6 +2,12 @@ extends Node3D
 
 const DATA = "res://data/testData.json"
 
+const STAR_RADIUS = 500
+const MIN_APP_BRIGHTNESS = 6
+const MAX_APP_BRIGHTNESS = -20
+const MIN_BRIGHNESS_MULT = 0.0
+const MAX_BRIGHTNESS_MULT = 5
+
 var starScene = load("res://star.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -42,21 +48,24 @@ func createStars(starDataFile):
 		var gLat = starData["GLAT"]
 		var gLon = starData["GLON"]
 		var dist = starData["dist"]
-		
-		# Default to 1.0 if not found
-		var kR = starData.get("kR", 1.0)  
-		var kG = starData.get("kG", 1.0)  
-		var kB = starData.get("kB", 1.0)  
+		var absMag = starData["absmag"]
 		
 		if typeof(gLat) != TYPE_STRING and typeof(gLon) != TYPE_STRING and typeof(dist) != TYPE_STRING:			
-			star.global_position = galacticToCartesian(gLat, gLon, dist)
+			star.global_position = galacticToCartesian(gLat, gLon, STAR_RADIUS)
 			
 			var material = StandardMaterial3D.new()
-			material.albedo_color = Color(kR,kG,kB)
-			material.flags_unshaded = true			#No lighting applied to material
-			star.material_override = material
 			
-			add_child(star)
+			material.emission = Color(1,1,1)
+			material.emission_enabled = true
+			
+			var appMag = absMag + 5 * (log(dist) / log(10) - 1)
+			if appMag <= 6:
+			
+				material.emission_energy_multiplier = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT) 
+				
+				star.material_override = material
+				
+				add_child(star)
 			
 func galacticToCartesian(gLat:float, gLong:float, dist:float):
 	"""
@@ -74,10 +83,5 @@ func galacticToCartesian(gLat:float, gLong:float, dist:float):
 	var x = dist * cos(gLatRad) * cos(gLongRad)
 	var y = dist * cos(gLatRad) * sin(gLongRad)
 	var z = dist * sin(gLatRad)
-	
-	#Scale star coordinates
-	x *= 30
-	y *= 30
-	z *= 30
 
 	return Vector3(x, y, z)	
