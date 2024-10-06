@@ -8,13 +8,13 @@ def write_tables(planet: Table, stars: Table):
     planet_index = get_highest_numbered_folder(planets_folder_path) + 1
     planet_folder_path = f"{planets_folder_path}exoplanet_{planet_index}"
     os.makedirs(planet_folder_path)
-    with open(f"{planet_folder_path}/planet.csv", "w+") as f:
+    with open(f"{planet_folder_path}/planet.csv", "w+", newline='') as f:
         fieldnames = planet.colnames
         d_writer = csv.DictWriter(f, fieldnames=fieldnames)
         d_writer.writeheader()
         d_writer.writerow(planet[0])
 
-    with open(f"{planet_folder_path}/star.csv", "w+") as f:
+    with open(f"{planet_folder_path}/star.csv", "w+", newline='') as f:
         fieldnames = stars.colnames
         d_writer = csv.DictWriter(f, fieldnames=fieldnames)
         d_writer.writeheader()
