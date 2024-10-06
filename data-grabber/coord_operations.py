@@ -1,4 +1,4 @@
-from math import radians, cos, sin, sqrt, atan2, acos
+from math import degrees, radians, cos, sin, sqrt, atan2, acos
 
 
 def galactic_to_cartesian(galactic_lat: float, galactic_long: float, dist: float) -> tuple[float, float, float]:
@@ -38,7 +38,7 @@ def cartesian_to_galactic(x: float, y: float, z: float) -> tuple[float, float, f
     distance = sqrt(x2 + y2 + z2)  # radius
     longitude = atan2(y, x)  # theta
     latitude = acos(z / distance)  # phi
-    return radians(latitude), radians(longitude), radians(distance)
+    return degrees(latitude), degrees(longitude), degrees(distance)
 
 
 def get_translation_diffs(x: float, y: float, z: float) -> dict[str, float]:
