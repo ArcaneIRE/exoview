@@ -1,5 +1,4 @@
 from astropy.table import Table
-import csv
 import os
 
 
@@ -8,17 +7,10 @@ def write_tables(planet: Table, stars: Table):
     planet_index = get_highest_numbered_folder(planets_folder_path) + 1
     planet_folder_path = f"{planets_folder_path}exoplanet_{planet_index}"
     os.makedirs(planet_folder_path)
-    with open(f"{planet_folder_path}/planet.csv", "w+", newline='') as f:
-        fieldnames = planet.colnames
-        d_writer = csv.DictWriter(f, fieldnames=fieldnames)
-        d_writer.writeheader()
-        d_writer.writerow(planet[0])
-
-    with open(f"{planet_folder_path}/star.csv", "w+", newline='') as f:
-        fieldnames = stars.colnames
-        d_writer = csv.DictWriter(f, fieldnames=fieldnames)
-        d_writer.writeheader()
-        d_writer.writerows(stars)
+    planet_df = planet.to_pandas()
+    planet_df.to_json(f"{planet_folder_path}/planet.json", orient="records")
+    stars_df = stars.to_pandas()
+    stars_df.to_json(f"{planet_folder_path}/stars.json", orient="records")
 
 
 def get_highest_numbered_folder(data_folder_path: str):
