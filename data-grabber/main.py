@@ -13,7 +13,6 @@ for row in planets:
     add_cartesians(planet, stars)
     add_XO_as_origin_cartesians(planet, stars)
     add_XO_origin_galactics(planet, stars)
-    print(stars)
     # calculate_real_brightness(stars)
     # cull_dim_stars(stars)
     # write_tables(planet, stars)
