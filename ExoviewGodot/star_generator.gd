@@ -7,7 +7,7 @@ var currentPlanet = 0
 const MATERIAL_DIR = "res://assets/PlanetTextures/"
 var matArray = []
 
-const STAR_RADIUS = 800
+const STAR_RADIUS = 400
 const MIN_APP_BRIGHTNESS = 7
 const MAX_APP_BRIGHTNESS = -20
 
@@ -58,53 +58,53 @@ func loadStarData(starDataFile: String):
 func createStars():
 	var starDataFile = DATA_DIR + planetArray[currentPlanet] + "/stars.json"
 	
-	var starDict = loadStarData(starDataFile)
-	if starDict == null:
+	var starDataArray = loadStarData(starDataFile)
+	if starDataArray == null:
 		return null
-		
-	var starDataArray = starDict["stars"]
 	
 	for starData in starDataArray:
 		var star = starScene.instantiate() 
 		
-		var gLat = starData["GLAT"]
-		var gLon = starData["GLON"]
-		var dist = starData["dist"]
-		var absMag = starData["absmag"]
-
-		if typeof(gLat) != TYPE_STRING and typeof(gLon) != TYPE_STRING and typeof(dist) != TYPE_STRING:			
-			var appMag = absMag + 5 * (log(dist) / log(10) - 1)
-			if appMag <= 6:		
-				star.global_position = galacticToCartesian(gLat, gLon, STAR_RADIUS)
-				
-				var material = StandardMaterial3D.new()				
-				
-				var star_type = randi() % 5  # Randomly choose a star type
-				var color:Color
-				match star_type:
-					0: color =  Color(1,0.613,0.338)
-					1: color =  Color(0.618, 0.704, 1.0)
-					2: color =  Color(0.807, 0.828, 1.0)
-					3: color =  Color(1, 1, 1)
-					4: color =  Color(1, 0.89, 0.869)
-			
-				material.emission = color
-			
-				material.emission_enabled = true
+		var gLat = starData["xo_as_origin_latitude"]
+		var gLon = starData["xo_as_origin_longitude"]
+		var dist = starData["xo_as_origin_distance"]
+		var absMag = starData["absolute_magnitude"]
 		
-				material.emission_energy_multiplier = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT) 
-				star.material_override = material
-				
-				var sphereMesh = SphereMesh.new()
-				
-				var sizeScalar = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_SIZE, MAX_SIZE)
-								
-				sphereMesh.radius = 0.5 * sizeScalar
-				sphereMesh.height = 1 * sizeScalar
-				
-				star.mesh = sphereMesh
+		var appMag = absMag + 5 * (log(dist) / log(10) - 1)
+		if appMag <= 6:					
+			star.global_position = galacticToCartesian(gLat, gLon, STAR_RADIUS)
+			
+			add_child(star)
+						
+			var material = StandardMaterial3D.new()				
+			
+			var star_type = randi() % 5  # Randomly choose a star type
+			var color:Color
+			match star_type:
+				0: color =  Color(1,0.613,0.338)
+				1: color =  Color(0.618, 0.704, 1.0)
+				2: color =  Color(0.807, 0.828, 1.0)
+				3: color =  Color(1, 1, 1)
+				4: color =  Color(1, 0.89, 0.869)
+		
+			material.emission = color
+		
+			material.emission_enabled = true
+			material.emission_energy_multiplier = 8
 
-				add_child(star)
+			star.material_override = material
+			material.emission_energy_multiplier = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT) 
+			star.material_override = material
+			
+			var sphereMesh = SphereMesh.new()
+			
+			var sizeScalar = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_SIZE, MAX_SIZE)
+							
+			sphereMesh.radius = 0.5 * sizeScalar
+			sphereMesh.height = 1 * sizeScalar
+			
+			star.mesh = sphereMesh
+	
 
 
 func get_random_color(min_rgb: Vector3, max_rgb: Vector3) -> Color:
@@ -114,6 +114,7 @@ func get_random_color(min_rgb: Vector3, max_rgb: Vector3) -> Color:
 	return Color(r, g, b)
 
 func clearStars():
+	print("Stars Clearing")
 	for star in get_children():
 		star.queue_free()
 
@@ -122,7 +123,7 @@ func setPlanetTexture():
 	$"../Ground".material_override = material		
 		
 func cyclePlanets():
-	currentPlanet = (currentPlanet + 1) % planetArray.size()
+	currentPlanet = (currentPlanet + 1) % 5
 	
 	setPlanetTexture()
 	clearStars()
