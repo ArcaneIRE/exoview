@@ -1,5 +1,5 @@
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive
-import astropy.table.QTable as QTable
+from astropy.table import QTable
 import numpy as np
 
 
@@ -10,7 +10,7 @@ def get_random_exoplanets(quantity: int = 1) -> QTable:
         name_conditions.append(f"pl_name='{row["pl_name"]}'")
     results = NasaExoplanetArchive.query_criteria(
         table="ps",
-        select="distinct pl_name, ra, dec, sy_dist",
+        select="distinct pl_name, ra, dec, sy_dist, glat, glon",
         cache=True,
         where=" OR ".join(name_conditions)
     )

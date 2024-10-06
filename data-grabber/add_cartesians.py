@@ -8,13 +8,13 @@ def add_cartesians(planet, stars):
 
 
 def add_cartesians_to_planet(planet: Table):
-    planet.remove_column('sky_coord')
+    # planet.remove_column('sky_coord')
     planet.rename_column('sy_dist', 'distance_parsecs')
     planet.rename_column('glon', 'galactic_longitude')
     planet.rename_column('glat', 'galactic_latitude')
-    planet.add_column(None, name='cart_x')
-    planet.add_column(None, name='cart_y')
-    planet.add_column(None, name='cart_z')
+    planet.add_column(0.0, name='cart_x')
+    planet.add_column(0.0, name='cart_y')
+    planet.add_column(0.0, name='cart_z')
 
     x, y, z = galactic_to_cartesian(
         planet['galactic_longitude'], planet['galactic_latitude'], planet['distance_parsecs'])
@@ -27,9 +27,9 @@ def add_cartesians_to_stars(stars: Table):
     stars.rename_column('l', 'galactic_longitude')
     stars.rename_column('b', 'galactic_latitude')
     stars.rename_column('distance_gspphot', 'distance_parsecs')
-    stars.add_column(None, name='cart_x')
-    stars.add_column(None, name='cart_y')
-    stars.add_column(None, name='cart_z')
+    stars.add_column(0.0, name='cart_x')
+    stars.add_column(0.0, name='cart_y')
+    stars.add_column(0.0, name='cart_z')
 
     for star in stars:
         x, y, z = galactic_to_cartesian(
