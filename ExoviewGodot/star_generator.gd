@@ -8,10 +8,13 @@ const MATERIAL_DIR = "res://assets/PlanetTextures/"
 var matArray = []
 
 const STAR_RADIUS = 500
-const MIN_APP_BRIGHTNESS = 6
+const MIN_APP_BRIGHTNESS = 7
 const MAX_APP_BRIGHTNESS = -20
-const MIN_BRIGHNESS_MULT = 0
+
+const MIN_BRIGHNESS_MULT = 1
 const MAX_BRIGHTNESS_MULT = 8
+const MIN_SIZE = 1
+const MAX_SIZE = 15
 
 var starScene = load("res://star.tscn")
 
@@ -74,29 +77,41 @@ func createStars():
 			if appMag <= 6:		
 				star.global_position = galacticToCartesian(gLat, gLon, STAR_RADIUS)
 				
-				var material = StandardMaterial3D.new()
+				var material = StandardMaterial3D.new()				
 				
-				material.emission = Color(1,1,1)
-				material.emission_enabled = true				
+				var star_type = randi() % 5  # Randomly choose a star type
+				var color:Color
+				match star_type:
+					0: color =  Color(1,0.613,0.338)
+					1: color =  Color(0.618, 0.704, 1.0)
+					2: color =  Color(0.807, 0.828, 1.0)
+					3: color =  Color(1, 1, 1)
+					4: color =  Color(1, 0.89, 0.869)
+			
+				material.emission = color
+			
+				material.emission_enabled = true
 		
 				material.emission_energy_multiplier = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT) 
-				star.material_override = material				
+				star.material_override = material
 				
 				var sphereMesh = SphereMesh.new()
 				
-				var sizeScalar = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, 1, 20)
+				var sizeScalar = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_SIZE, MAX_SIZE)
 								
 				sphereMesh.radius = 0.5 * sizeScalar
 				sphereMesh.height = 1 * sizeScalar
 				
 				star.mesh = sphereMesh
-				
-				#var sphereMesh = star.mesh as SphereMesh
-				#sphereMesh.radius = 1
-				#sphereMesh.radius *= remap(appMag, 0, 4, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT)
-				#sphereMesh.height *= remap(appMag, 0, 4, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT)*2
 
 				add_child(star)
+
+
+func get_random_color(min_rgb: Vector3, max_rgb: Vector3) -> Color:
+	var r = randf_range(min_rgb.x, max_rgb.x)
+	var g = randf_range(min_rgb.y, max_rgb.y)
+	var b = randf_range(min_rgb.z, max_rgb.z)
+	return Color(r, g, b)
 
 func clearStars():
 	for star in get_children():
