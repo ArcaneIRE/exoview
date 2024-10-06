@@ -16,4 +16,4 @@ for row in planets:
     add_XO_origin_galactics(planet, stars)
     calculate_real_brightness(stars)
     # cull_dim_stars(stars)
-    # write_tables(planet, stars)
+    write_tables(planet, stars)
