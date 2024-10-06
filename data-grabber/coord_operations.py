@@ -3,7 +3,7 @@ from math import degrees, radians, cos, sin, sqrt, atan2, acos
 
 def galactic_to_cartesian(galactic_lat: float, galactic_long: float, dist: float) -> tuple[float, float, float]:
     """
-    Convert Galactic coordinates to Cartesian coordinates.    
+    Convert Galactic coordinates to Cartesian coordinates.
     gLat: Galactic latitude in degrees
     gLong: Galactic longitude in degrees
     dist: Distance
@@ -22,7 +22,7 @@ def galactic_to_cartesian(galactic_lat: float, galactic_long: float, dist: float
 
 def cartesian_to_galactic(x: float, y: float, z: float) -> tuple[float, float, float]:
     """
-    Convert Cartesian coordinates to Galactic coordinates    
+    Convert Cartesian coordinates to Galactic coordinates
     x: x cartesian coordinate (in parsecs?)
     y: x cartesian coordinate (in parsecs?)
     z: y cartesian coordinate (in parsecs?)
@@ -38,7 +38,7 @@ def cartesian_to_galactic(x: float, y: float, z: float) -> tuple[float, float, f
     distance = sqrt(x2 + y2 + z2)  # radius
     longitude = atan2(y, x)  # theta
     latitude = acos(z / distance)  # phi
-    return degrees(latitude), degrees(longitude), degrees(distance)
+    return degrees(latitude), degrees(longitude), (distance)
 
 
 def get_translation_diffs(x: float, y: float, z: float) -> dict[str, float]:

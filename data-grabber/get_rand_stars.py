@@ -15,7 +15,9 @@ def get_stars(planet):
         dec,
         l,
         b,
-        pseudocolour
+        pseudocolour,
+        phot_g_mean_mag
+
     FROM
         "gaiadr3"."gaia_source"
     WHERE
