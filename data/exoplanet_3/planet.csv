@@ -1,0 +1,2 @@
+pl_name,ra,dec,distance_parsecs,galactic_latitude,galactic_longitude,cart_x,cart_y,cart_z,xo_as_origin_x,xo_as_origin_y,xo_as_origin_z,xo_as_origin_latitude,xo_as_origin_longitude,xo_as_origin_distance
+Kepler-1290 b,290.6852287,43.8596155,1593.7,13.21299,75.73032,382.42582664037735,89.78864540026083,1544.5284640548423,0.0,0.0,0.0,0.0,0.0,0.0

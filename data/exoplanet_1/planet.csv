@@ -1,0 +1,2 @@
+pl_name,ra,dec,distance_parsecs,galactic_latitude,galactic_longitude,cart_x,cart_y,cart_z,xo_as_origin_x,xo_as_origin_y,xo_as_origin_z,xo_as_origin_latitude,xo_as_origin_longitude,xo_as_origin_distance
+OGLE-2013-BLG-1721L b,268.126556,-30.2926941,6300.0,-1.98134,359.60721,6296.085528881129,-217.81117492479538,-43.18917794439298,0.0,0.0,0.0,0.0,0.0,0.0
