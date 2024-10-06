@@ -1,0 +1,2 @@
+pl_name,ra,dec,distance_parsecs,galactic_latitude,galactic_longitude,cart_x,cart_y,cart_z,xo_as_origin_x,xo_as_origin_y,xo_as_origin_z,xo_as_origin_latitude,xo_as_origin_longitude,xo_as_origin_distance
+HD 96700 d,166.9742616,-30.1751383,25.4111,27.58074,277.73064,3.0297553753348803,1.5826212571392466,-25.18014883856091,0.0,0.0,0.0,0.0,0.0,0.0
