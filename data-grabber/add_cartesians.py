@@ -8,7 +8,7 @@ def add_cartesians(planet, stars):
 
 
 def add_cartesians_to_planet(planet: Table):
-    # planet.remove_column('sky_coord')
+    planet.remove_column('sky_coord')
     planet.rename_column('sy_dist', 'distance_parsecs')
     planet.rename_column('glon', 'galactic_longitude')
     planet.rename_column('glat', 'galactic_latitude')
