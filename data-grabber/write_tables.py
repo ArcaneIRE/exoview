@@ -33,8 +33,7 @@ def get_highest_numbered_folder(data_folder_path: str):
     exoplanet_folders = [folder for folder in os.listdir(
         data_folder_path) if folder.startswith('exoplanet_')]
     if not exoplanet_folders:
-        print("Exoplanet folder not found")
-        return None
+        return 0
 
     existing_indexes = [int(folder.split('_')[1])
                         for folder in exoplanet_folders]
