@@ -7,14 +7,14 @@ var currentPlanet = 0
 const MATERIAL_DIR = "res://assets/PlanetTextures/"
 var matArray = []
 
-const STAR_RADIUS = 500
+const STAR_RADIUS = 800
 const MIN_APP_BRIGHTNESS = 7
 const MAX_APP_BRIGHTNESS = -20
 
 const MIN_BRIGHNESS_MULT = 1
 const MAX_BRIGHTNESS_MULT = 8
 const MIN_SIZE = 1
-const MAX_SIZE = 15
+const MAX_SIZE = 12
 
 var starScene = load("res://star.tscn")
 
