@@ -1,4 +1,4 @@
-from math import radians, cos, sin
+from math import degrees, radians, cos, sin, sqrt, atan2, acos
 
 
 def galactic_to_cartesian(galactic_lat: float, galactic_long: float, dist: float) -> tuple[float, float, float]:
@@ -18,6 +18,27 @@ def galactic_to_cartesian(galactic_lat: float, galactic_long: float, dist: float
     z = dist * sin(galactic_lat_rad)
 
     return (x, y, z)
+
+
+def cartesian_to_galactic(x: float, y: float, z: float) -> tuple[float, float, float]:
+    """
+    Convert Cartesian coordinates to Galactic coordinates    
+    x: x cartesian coordinate (in parsecs?)
+    y: x cartesian coordinate (in parsecs?)
+    z: y cartesian coordinate (in parsecs?)
+
+    Useful source: https://blog.demofox.org/2013/10/12/converting-to-and-from-polar-spherical-coordinates-made-easy/
+    """
+    x = float(x)
+    y = float(y)
+    z = float(z)
+    x2 = x * x
+    y2 = y * y
+    z2 = z * z
+    distance = sqrt(x2 + y2 + z2)  # radius
+    longitude = atan2(y, x)  # theta
+    latitude = acos(z / distance)  # phi
+    return degrees(latitude), degrees(longitude), degrees(distance)
 
 
 def get_translation_diffs(x: float, y: float, z: float) -> dict[str, float]:
