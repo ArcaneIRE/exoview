@@ -10,8 +10,8 @@ var matArray = []
 const STAR_RADIUS = 500
 const MIN_APP_BRIGHTNESS = 6
 const MAX_APP_BRIGHTNESS = -20
-const MIN_BRIGHNESS_MULT = 0.0
-const MAX_BRIGHTNESS_MULT = 5
+const MIN_BRIGHNESS_MULT = 0
+const MAX_BRIGHTNESS_MULT = 8
 
 var starScene = load("res://star.tscn")
 
@@ -62,28 +62,40 @@ func createStars():
 	var starDataArray = starDict["stars"]
 	
 	for starData in starDataArray:
-		var star = starScene.instantiate()
+		var star = starScene.instantiate() 
 		
 		var gLat = starData["GLAT"]
 		var gLon = starData["GLON"]
 		var dist = starData["dist"]
 		var absMag = starData["absmag"]
-		
+
 		if typeof(gLat) != TYPE_STRING and typeof(gLon) != TYPE_STRING and typeof(dist) != TYPE_STRING:			
-			star.global_position = galacticToCartesian(gLat, gLon, STAR_RADIUS)
-			
-			var material = StandardMaterial3D.new()
-			
-			material.emission = Color(1,1,1)
-			material.emission_enabled = true
-			
 			var appMag = absMag + 5 * (log(dist) / log(10) - 1)
-			if appMag <= 6:
-			
+			if appMag <= 6:		
+				star.global_position = galacticToCartesian(gLat, gLon, STAR_RADIUS)
+				
+				var material = StandardMaterial3D.new()
+				
+				material.emission = Color(1,1,1)
+				material.emission_enabled = true				
+		
 				material.emission_energy_multiplier = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT) 
+				star.material_override = material				
 				
-				star.material_override = material
+				var sphereMesh = SphereMesh.new()
 				
+				var sizeScalar = remap(appMag, MIN_APP_BRIGHTNESS, MAX_APP_BRIGHTNESS, 1, 20)
+								
+				sphereMesh.radius = 0.5 * sizeScalar
+				sphereMesh.height = 1 * sizeScalar
+				
+				star.mesh = sphereMesh
+				
+				#var sphereMesh = star.mesh as SphereMesh
+				#sphereMesh.radius = 1
+				#sphereMesh.radius *= remap(appMag, 0, 4, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT)
+				#sphereMesh.height *= remap(appMag, 0, 4, MIN_BRIGHNESS_MULT, MAX_BRIGHTNESS_MULT)*2
+
 				add_child(star)
 
 func clearStars():
