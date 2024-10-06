@@ -1,6 +1,7 @@
 from astroquery.ipac.nexsci.nasa_exoplanet_archive import NasaExoplanetArchive
 from astropy.table import QTable
 import numpy as np
+import math
 
 
 def get_random_exoplanets(quantity: int = 1) -> QTable:
@@ -14,6 +15,16 @@ def get_random_exoplanets(quantity: int = 1) -> QTable:
         cache=True,
         where=" OR ".join(name_conditions)
     )
+
+    results.add_index('pl_name')
+    
+    # Check for null rows and remove them
+    for pl in results:
+        if math.isnan(float(pl['sy_dist'].value)):
+            print(f"pl {pl['pl_name']} sy_dist was Nan")
+            results.remove_row(results.loc[pl['pl_name']].index)
+
+    print("===")
     return results
 
 
