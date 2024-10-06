@@ -24,7 +24,7 @@ emission = Color(0.105549, 0.169761, 0.0488357, 1)
 material = SubResource("StandardMaterial3D_jcqrj")
 size = Vector3(100, 1, 100)
 
-[sub_resource type="PackedScene" id="PackedScene_gbinn"]
+[sub_resource type="PackedScene" id="PackedScene_02lmk"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -58,6 +58,7 @@ text = "FPS:"
 font_size = 100
 
 [node name="StarGenerator" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 script = ExtResource("2_1rmjy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -86,12 +87,11 @@ mesh = SubResource("BoxMesh_gjayy")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.0232108, 0.999731, 0, -0.999731, -0.0232108, 0, 5.43299, 0)
-visible = false
 
 [node name="Viewport2Din3D" parent="." instance=ExtResource("5_otinq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.422864, 1.02418, -2.01494)
 visible = false
-scene = SubResource("PackedScene_gbinn")
+scene = SubResource("PackedScene_02lmk")
 unshaded = true
 scene_properties_keys = PackedStringArray("ui.gd")
 
