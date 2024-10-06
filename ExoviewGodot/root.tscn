@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpqbfio3pjdxr"]
+[gd_scene load_steps=10 format=3 uid="uid://dpqbfio3pjdxr"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_4v4k6"]
 [ext_resource type="Script" path="res://star_generator.gd" id="2_1rmjy"]
 [ext_resource type="Script" path="res://first_person_controller.gd" id="2_hvqpt"]
+[ext_resource type="PackedScene" uid="uid://b8aail60vhaey" path="res://UI.tscn" id="5_jm6ac"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="5_otinq"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ei85s"]
 
@@ -11,6 +13,8 @@ background_mode = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqrj"]
 albedo_color = Color(0.0814617, 0.253316, 5.77569e-07, 1)
+emission_enabled = true
+emission = Color(0.105549, 0.169761, 0.0488357, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gjayy"]
 material = SubResource("StandardMaterial3D_jcqrj")
@@ -66,4 +70,12 @@ mesh = SubResource("BoxMesh_gjayy")
 transform = Transform3D(1, 0, 0, 0, -0.0232108, 0.999731, 0, -0.999731, -0.0232108, 0, 5.43299, 0)
 visible = false
 
+[node name="Viewport2Din3D" parent="." instance=ExtResource("5_otinq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.422864, 1.02418, -2.01494)
+visible = false
+scene = ExtResource("5_jm6ac")
+unshaded = true
+scene_properties_keys = PackedStringArray()
+
 [connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="StarGenerator" method="_on_right_controller_button_pressed"]

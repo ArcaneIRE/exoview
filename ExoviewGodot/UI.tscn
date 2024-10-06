@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8aail60vhaey"]
+
+[ext_resource type="Script" path="res://ui.gd" id="1_xq5i1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xq5i1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 743.0
+offset_bottom = 388.0
+color = Color(0.317647, 0.662745, 1, 1)
+
+[node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 54.0
+offset_right = 224.0
+offset_bottom = 133.0
+text = "Debug"
+
+[connection signal="button_down" from="ColorRect/Button" to="." method="_on_button_button_down"]

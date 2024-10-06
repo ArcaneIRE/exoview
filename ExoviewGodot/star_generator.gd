@@ -1,6 +1,11 @@
 extends Node3D
 
-const DATA = "res://data/testData.json"
+const DATA_DIR = "res://data/"
+var planetArray = []
+var currentPlanet = 0
+
+const MATERIAL_DIR = "res://assets/PlanetTextures/"
+var matArray = []
 
 const STAR_RADIUS = 500
 const MIN_APP_BRIGHTNESS = 6
@@ -12,12 +17,24 @@ var starScene = load("res://star.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	createStars(DATA)
+	buildFileArray(DATA_DIR, planetArray)
+	buildFileArray(MATERIAL_DIR, matArray)
+	setPlanetTexture()
+	createStars()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
+func buildFileArray(dataDir, array):
+	var dir = DirAccess.open(dataDir)
+	if dir:
+		dir.list_dir_begin()
+		var fileName = dir.get_next()
+		while fileName != "":
+			array.append(fileName)
+			fileName = dir.get_next()
+	
 func loadStarData(starDataFile: String):
 	var file = FileAccess.open(starDataFile, FileAccess.READ)
 	
@@ -35,7 +52,9 @@ func loadStarData(starDataFile: String):
 		print(json.get_error_message())
 		return null
 
-func createStars(starDataFile):
+func createStars():
+	var starDataFile = DATA_DIR + planetArray[currentPlanet] + "/stars.json"
+	
 	var starDict = loadStarData(starDataFile)
 	if starDict == null:
 		return null
@@ -66,7 +85,22 @@ func createStars(starDataFile):
 				star.material_override = material
 				
 				add_child(star)
-			
+
+func clearStars():
+	for star in get_children():
+		star.queue_free()
+
+func setPlanetTexture():
+	var material = load(MATERIAL_DIR + matArray[currentPlanet])
+	$"../Ground".material_override = material		
+		
+func cyclePlanets():
+	currentPlanet = (currentPlanet + 1) % planetArray.size()
+	
+	setPlanetTexture()
+	clearStars()
+	createStars()
+
 func galacticToCartesian(gLat:float, gLong:float, dist:float):
 	"""
 	Convert Galactic coordinates to Cartesian coordinates.	
@@ -85,3 +119,11 @@ func galacticToCartesian(gLat:float, gLong:float, dist:float):
 	var z = dist * sin(gLatRad)
 
 	return Vector3(x, y, z)	
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("left_mouse_click"):
+		cyclePlanets()
+
+func _on_right_controller_button_pressed(name: String) -> void:
+	if name == "ax_button":
+		cyclePlanets()

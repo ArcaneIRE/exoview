@@ -11,7 +11,7 @@ var interfaceMode: INTERFACE_MODE
 @onready var XRFPSDisplay = $XROrigin3D/XRCamera3D/XRFPS
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready() -> void:	
 	xr_interface = XRServer.find_interface("OpenXR")
 	if xr_interface and xr_interface.is_initialized():	
 		setupXRMode()
@@ -56,5 +56,6 @@ func updateFPSDisplay():
 
 func _on_right_controller_button_pressed(name: String) -> void:
 	#XR Right Controller Pressed
-	if name == "ax_button":
+	if name == "by_button":
 		toggleDebugMode()
+		

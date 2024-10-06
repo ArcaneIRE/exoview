@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dpqbfio3pjdxr"]
+
+[ext_resource type="Script" path="res://root.gd" id="1_4v4k6"]
+[ext_resource type="Script" path="res://star_generator.gd" id="2_1rmjy"]
+[ext_resource type="Script" path="res://first_person_controller.gd" id="2_hvqpt"]
+[ext_resource type="PackedScene" uid="uid://b8aail60vhaey" path="res://UI.tscn" id="5_jm6ac"]
+[ext_resource type="PackedScene" uid="uid://clujaf3u776a3" path="res://addons/godot-xr-tools/objects/viewport_2d_in_3d.tscn" id="5_otinq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ei85s"]
+
+[sub_resource type="Environment" id="Environment_8gtff"]
+background_mode = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcqrj"]
+albedo_color = Color(0.0814617, 0.253316, 5.77569e-07, 1)
+emission_enabled = true
+emission = Color(0.105549, 0.169761, 0.0488357, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gjayy"]
+material = SubResource("StandardMaterial3D_jcqrj")
+size = Vector3(100, 1, 100)
+
+[node name="root" type="Node3D"]
+script = ExtResource("1_4v4k6")
+
+[node name="FirstPersonController" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.478)
+script = ExtResource("2_hvqpt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FirstPersonController"]
+shape = SubResource("SphereShape3D_ei85s")
+disabled = true
+
+[node name="Camera3D" type="Camera3D" parent="FirstPersonController"]
+
+[node name="DesktopFPS" type="Label3D" parent="FirstPersonController/Camera3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.4704, 0.758344, -1.27381)
+visible = false
+text = "FPS:"
+font_size = 100
+
+[node name="StarGenerator" type="Node3D" parent="."]
+script = ExtResource("2_1rmjy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8gtff")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="XRFPS" type="Label3D" parent="XROrigin3D/XRCamera3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.29257, 0.114583, -0.754361)
+visible = false
+text = "FPS
+"
+font_size = 100
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_gjayy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0232108, 0.999731, 0, -0.999731, -0.0232108, 0, 5.43299, 0)
+visible = false
+
+[node name="Viewport2Din3D" parent="." instance=ExtResource("5_otinq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.422864, 1.02418, -2.01494)
+scene = ExtResource("5_jm6ac")
+unshaded = true
+scene_properties_keys = PackedStringArray()
+
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="StarGenerator" method="_on_right_controller_button_pressed"]
